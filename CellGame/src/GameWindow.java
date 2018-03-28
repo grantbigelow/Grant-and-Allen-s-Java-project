@@ -17,6 +17,16 @@ public class GameWindow extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		drawCenteredCircle(g, 50, 50, 25);
 	}
+	
+	//https://stackoverflow.com/a/19387172
+	public void drawCenteredCircle(Graphics g, int x, int y, int r) {
+		  x = x-(r/2);
+		  y = y-(r/2);
+		  g.fillOval(x,y,r,r);
+		}
+	
 
 }
