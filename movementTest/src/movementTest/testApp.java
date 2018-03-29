@@ -50,28 +50,39 @@ public class testApp extends JPanel implements ActionListener{
 			
 			setCoord(startX,startY,endX, endY);
 		}
-	public void drawNumber(Graphics g, int number, int x, int y,int r) {
+	public void drawNumber(Graphics g, int number, int x, int y, int font, boolean isMoving) {
 		String sNum = number+"";
-		g.setColor(Color.black);
-		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 25 ));
-		g.drawString(sNum, x+((r-5)/2), y+((r-5)/2));
+		int w = g.getFontMetrics().stringWidth(sNum);
+		g.setColor(Color.blue);
+		g.setFont(new Font("Comic Sans MS", Font.PLAIN, font ));
+		if(isMoving)
+			g.drawString(sNum, x-(w/3), y+(w/3));
+		else
+			g.drawString(sNum,x-w,y+w);
+	
 	}
+	public void drawCenteredCircle(Graphics g, int x, int y, int r) {
+		  x = x-(r/2);
+		  y = y-(r/2);
+		  g.fillOval(x,y,r,r);
+		}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
-		g.fillOval(300, 300, 50, 50);
-		drawNumber(g, 15, 300, 300, 50);
+		drawCenteredCircle(g, 300,300,50);
+		drawNumber(g, 1, 300, 300, 25,false);
 		
 		
 		g.setColor(Color.black);
 		if(dissapear)
-			g.fillOval(startX, startY, 10, 10);
+			drawCenteredCircle(g,startX, startY, 50);
+			drawNumber(g,1,startX,startY, 10,true);
 		
 		
 		
 	}
 
-	
+	//working on sending troops after click
 	
 	
 }
