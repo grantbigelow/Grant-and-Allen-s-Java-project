@@ -34,12 +34,8 @@ public class testApp extends JPanel implements ActionListener{
 	 		startY = sty;
 	 		endX = ex;
 	 		endY = ey;
-	 	}
-	 	
-	    public void actionPerformed(ActionEvent e) {
-			
-			
-			if(startX<endX && startY<endY) {
+	 		
+	 		if(startX<endX && startY<endY) {
 				startX += 1;
 				startY+=1;
 				dissapear = true;
@@ -48,17 +44,25 @@ public class testApp extends JPanel implements ActionListener{
 				dissapear = false;
 				
 			repaint();
+	 	}
+	 	
+	public void actionPerformed(ActionEvent e) {
 			
-				
-			
+			setCoord(startX,startY,endX, endY);
 		}
+	public void drawNumber(Graphics g, int number, int x, int y,int r) {
+		String sNum = number+"";
+		g.setColor(Color.black);
+		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 25 ));
+		g.drawString(sNum, x+((r-5)/2), y+((r-5)/2));
+	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
 		g.fillOval(300, 300, 50, 50);
-		g.setColor(Color.blue);
-		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 25 ));
-		g.drawString("15", 310, 330);
+		drawNumber(g, 15, 300, 300, 50);
+		
+		
 		g.setColor(Color.black);
 		if(dissapear)
 			g.fillOval(startX, startY, 10, 10);
