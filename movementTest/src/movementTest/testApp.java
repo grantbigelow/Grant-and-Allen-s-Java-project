@@ -22,7 +22,7 @@ public class testApp extends JPanel implements ActionListener{
 	Timer timer;
 	
 	boolean dissapear = false;     
-	
+	int num = 1;
 	 testApp() {
 	
 	       
@@ -70,15 +70,18 @@ public class testApp extends JPanel implements ActionListener{
 		super.paintComponent(g);
 		g.setColor(Color.white);
 		drawCenteredCircle(g, 300,300,50);
-		drawNumber(g, 1, 300, 300, 25,false);
+		if(dissapear == false)
+			drawNumber(g, 1 - num, 300, 300, 25,false);
+		else
+			drawNumber(g, 1, 300, 300, 25,false);
 		
 		
 		g.setColor(Color.black);
-		if(dissapear)
+		if(dissapear) {
 			drawCenteredCircle(g,startX, startY, 50);
 			drawNumber(g,1,startX,startY, 10,true);
 		
-		
+		}
 		
 	}
 
