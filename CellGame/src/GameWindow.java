@@ -7,7 +7,8 @@ import javax.swing.JPanel;
 public class GameWindow extends JPanel {
 	int width, height, extWidth, extHeight;
 	
-	ArrayList<Cell> cellList = new ArrayList<Cell>();
+	ArrayList<Cell>  cellList  = new ArrayList<Cell>();
+	ArrayList<Troop> troopList = new ArrayList<Troop>();
 	
 	public GameWindow(int iWidth, int iHeight) {
 		this.width     = iWidth;

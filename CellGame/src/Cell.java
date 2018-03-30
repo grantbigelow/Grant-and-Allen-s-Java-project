@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Cell {
 	int     centerX;
@@ -83,6 +84,24 @@ public class Cell {
 			this.numOfTroops = numOfTroops - this.numOfTroops;
 			this.cellType = troopType;
 		}
+	}
+	
+	public void sendTroops(ArrayList<Troop> t, Cell otherCell) {
+		if (this.numOfTroops > 1) {
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
+			this.numOfTroops /= 2;
+		} else if (this.numOfTroops == 1) {
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
+			this.numOfTroops = 0;
+		}
+		
+	}
+	
+	public boolean isCoordInCell(int x, int y) {
+		if (Math.abs(this.centerX - x) <= this.radius || Math.abs(this.centerY - y) <= this.radius) {
+			return true;
+		}
+		return false;
 	}
 	
 	

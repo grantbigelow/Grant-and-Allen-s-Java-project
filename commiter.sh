@@ -3,6 +3,6 @@
 #git checkout master
 git pull origin master
 git add .
-git commit -am "website update"
+git commit -am "update"
 git push
 echo Press Enter...
