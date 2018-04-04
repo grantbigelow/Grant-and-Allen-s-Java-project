@@ -16,7 +16,9 @@ public class Troop {
 	
 	boolean finishedMoving;
 	
-	public Troop(Cell cell1, Cell cell2, int numOfTroops, int msDelay) {
+	double pxPerSec;
+	
+	public Troop(Cell cell1, Cell cell2, int numOfTroops) {
 		this.currentX    = cell1.getX();
 		this.currentY    = cell1.getY();
 		this.endX        = cell2.getX();
@@ -25,17 +27,18 @@ public class Troop {
 		this.numOfTroops = numOfTroops;
 		this.troopType   = cell1.getType();
 		
-		this.distPerMove = 1000 * 15.0 / msDelay; // (pixels / second) / (move call frequency)
+		this.pxPerSec    = 15.0; 
 		
 		this.finishedMoving = false;
 		
 		
 	}
 	
-	public void move() {
+	public void move(int msDelta) {
 		int[] delta;
+		double distToMove = (msDelta / 1000) * this.pxPerSec;
 		if (!this.finishedMoving) {
-			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < this.distPerMove) {
+			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < distToMove) {
 				targetCell.addTroops(this.numOfTroops, this.troopType);
 				this.finishedMoving = true;
 			} else {

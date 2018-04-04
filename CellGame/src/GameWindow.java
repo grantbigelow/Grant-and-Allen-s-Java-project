@@ -1,15 +1,15 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 
 import javax.swing.JPanel;
 
-public class GameWindow extends JPanel {
+public class GameWindow extends JPanel implements ActionListener {
 	int width, height, extWidth, extHeight, msDelay;
 	double frameRate;
 	
@@ -28,32 +28,27 @@ public class GameWindow extends JPanel {
 		setSize(this.extWidth, this.extHeight);
 		setBackground(Color.WHITE);
 		
-		Timer timer = new Timer();
+		Timer timer = new Timer(msDelay, this);
+		timer.setRepeats(true);
+		timer.start();
 		
 		MouseListen mouseEL = new MouseListen();
 		addMouseListener(mouseEL);
 		
-		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30, msDelay));
-		cellList.add(new Cell(300, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10, msDelay));
-		
-		timer.scheduleAtFixedRate(new TimerTask() {
-
-			@Override
-			public void run() {
-				move();
-				repaint();
-				
-			}}, msDelay, msDelay);
-		
+		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
+		cellList.add(new Cell(300, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
+		troopList.add(new Troop(cellList.get(0), cellList.get(1), 20));
 		
 	}
 	
-	public void move() {
-		for (Troop troop : troopList) {
-			troop.move();
+	public void move(int msDelta) {
+		for (int i = 0; i < troopList.size(); i++) {
+			Troop troop = troopList.get(i);
+			troop.move(msDelta);
 			
 			if (troop.finishedMoving) {
 				troopList.remove(troop);
+				i--;
 			}
 		}
 	}
@@ -75,6 +70,16 @@ public class GameWindow extends JPanel {
 		  y = y-(r/2);
 		  g.fillOval(x,y,r,r);
 		}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("HI");
+		move(msDelay);
+		repaint();
+		
+	}
+	
 	class MouseListen implements MouseListener{
 
 		@Override
@@ -121,5 +126,4 @@ public class GameWindow extends JPanel {
 		}
 		
 	}
-
 }

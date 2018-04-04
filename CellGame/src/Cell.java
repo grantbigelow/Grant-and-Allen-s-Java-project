@@ -15,13 +15,12 @@ public class Cell {
 	
 	int msDelay;
 	
-	public Cell(int centerX, int centerY, Type cellType, Size cellSize, int numOfTroops, int msDelay) {
+	public Cell(int centerX, int centerY, Type cellType, Size cellSize, int numOfTroops) {
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.cellType = cellType;
 		this.cellSize = cellSize;
 		this.numOfTroops = numOfTroops;
-		this.msDelay = msDelay;
 		switch(cellSize){
 			case SMALL:
 				this.maxTroops = 15;
@@ -91,10 +90,10 @@ public class Cell {
 	
 	public void sendTroops(ArrayList<Troop> t, Cell otherCell) {
 		if (this.numOfTroops > 1) {
-			t.add(new Troop(this, otherCell, this.numOfTroops / 2, msDelay));
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
 			this.numOfTroops /= 2;
 		} else if (this.numOfTroops == 1) {
-			t.add(new Troop(this, otherCell, this.numOfTroops / 2, msDelay));
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
 			this.numOfTroops = 0;
 		}
 		
