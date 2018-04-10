@@ -1,8 +1,8 @@
 import java.awt.Graphics;
 
 public class Troop {
-	int currentX;
-	int currentY;
+	double currentX;
+	double currentY;
 	int endX;
 	int endY;
 	
@@ -35,11 +35,12 @@ public class Troop {
 	}
 	
 	public void move(int msDelta) {
-		int[] delta;
-		double distToMove = (msDelta / 1000) * this.pxPerSec;
+		double[] delta;
+		double distToMove = (msDelta / 1000.0) * this.pxPerSec;
 		if (!this.finishedMoving) {
 			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < distToMove) {
 				targetCell.addTroops(this.numOfTroops, this.troopType);
+				
 				this.finishedMoving = true;
 			} else {
 				delta = getXYDelta(getDistance(this.currentX, this.currentY, this.endX, this.endY),
@@ -54,15 +55,15 @@ public class Troop {
 	
 	public void draw(Graphics g) {
 		if (!this.finishedMoving) {
-			DrawObjects.drawNumber(g, this.numOfTroops, this.currentX, this.currentY, 12);
+			DrawObjects.drawNumber(g, this.numOfTroops,(int) this.currentX, (int)this.currentY, 12);
 		}
 	}
 	
-	private int[] getXYDelta(double distance, double slope){
+	private double[] getXYDelta(double distance, double slope){
 		
 		double xDelta = Math.sqrt( Math.pow(distance, 2) / (Math.pow(slope, 2) + 1) );
 		double yDelta = xDelta * slope;
-		int[] ret = {(int) Math.round(xDelta),(int) Math.round(yDelta)};
+		double[] ret = {(int) Math.round(xDelta),(int) Math.round(yDelta)};
 		return ret;
 	}
 	
