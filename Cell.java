@@ -100,10 +100,14 @@ public class Cell {
 	}
 	
 	public boolean isCoordInCell(int x, int y) {
-		if (Math.abs(this.centerX - x) <= this.radius || Math.abs(this.centerY - y) <= this.radius) {
+		if (Math.abs(this.centerX - x) <= this.radius && Math.abs(this.centerY - y) <= this.radius) {
+			System.out.println("in cell");
 			return true;
+			
 		}
+		System.out.println("out cell");
 		return false;
+		
 	}
 	
 	

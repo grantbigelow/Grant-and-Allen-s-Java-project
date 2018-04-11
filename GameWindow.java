@@ -37,7 +37,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		
 		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
 		cellList.add(new Cell(300, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
-		troopList.add(new Troop(cellList.get(0), cellList.get(1), 20));
+		//troopList.add(new Troop(cellList.get(0), cellList.get(1), 20));
 		
 	}
 	
@@ -91,10 +91,10 @@ public class GameWindow extends JPanel implements ActionListener {
 					break;
 				}
 				
-				if (clickList.size() == 2) {
-					cellList.get(0).sendTroops(troopList, cellList.get(1));
-					cellList.clear();
-				}
+			}
+			if (clickList.size() == 2) {
+				cellList.get(0).sendTroops(troopList, cellList.get(1));
+				//cellList.clear();
 			}
 			
 			repaint();

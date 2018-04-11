@@ -24,6 +24,8 @@ public class Troop {
 		this.endX        = cell2.getX();
 		this.endY        = cell2.getY();
 		
+		this.targetCell = cell2;
+		
 		this.numOfTroops = numOfTroops;
 		this.troopType   = cell1.getType();
 		
@@ -35,7 +37,16 @@ public class Troop {
 	}
 	
 	public void move(int msDelta) {
-		double[] delta;
+		
+		if(currentX > 290) {
+		this.finishedMoving=true;
+		this.targetCell.addTroops(this.numOfTroops, this.troopType);
+		}	
+		else {
+			this.currentX += 1;
+			this.currentY += 1;
+		}
+		/*double[] delta;
 		double distToMove = (msDelta / 1000.0) * this.pxPerSec;
 		if (!this.finishedMoving) {
 			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < distToMove) {
@@ -45,11 +56,11 @@ public class Troop {
 			} else {
 				delta = getXYDelta(getDistance(this.currentX, this.currentY, this.endX, this.endY),
 						           getSlope   (this.currentX, this.currentY, this.endX, this.endY));
-				this.currentX -= delta[0];
-				this.currentY -= delta[1];
-				System.out.println(""+delta[0]+""+delta[1]+" "+distToMove);
+				this.currentX += delta[0];
+				this.currentY += delta[1];
+				
 			}
-		}
+		}*/
 		
 	}
 	
