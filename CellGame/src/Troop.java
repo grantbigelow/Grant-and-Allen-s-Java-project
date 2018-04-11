@@ -35,7 +35,9 @@ public class Troop {
 	}
 	
 	public void move(int msDelta) {
-		double[] delta;
+		this.currentX += 1;
+		this.currentY += 1;
+		/*double[] delta;
 		double distToMove = (msDelta / 1000.0) * this.pxPerSec;
 		if (!this.finishedMoving) {
 			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < distToMove) {
@@ -49,7 +51,7 @@ public class Troop {
 				this.currentY += delta[1];
 				
 			}
-		}
+		}*/
 		
 	}
 	
