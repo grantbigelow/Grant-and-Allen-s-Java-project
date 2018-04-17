@@ -62,7 +62,7 @@ public class Cell {
 				break;
 		}		
 		DrawObjects.drawCenteredCircle(g, this.centerX, this.centerY, this.radius);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		DrawObjects.drawNumber(g, this.numOfTroops, this.centerX, this.centerY, 18);
 	}
 	
@@ -78,7 +78,6 @@ public class Cell {
 	}
 	
 	public void addTroops(int numOfTroops, Type troopType) {
-		System.out.println("WHOOT");
 		if (this.cellType == troopType) {
 			this.numOfTroops += numOfTroops;
 		}else if (numOfTroops <= this.numOfTroops) {
@@ -90,11 +89,9 @@ public class Cell {
 	}
 	
 	public void sendTroops(ArrayList<Troop> t, Cell otherCell) {
-		System.out.println("CELL is Sending Troops");
 		if (this.numOfTroops > 1) {
 			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
-			System.out.println("t" + t.toString());
-			this.numOfTroops /= 2;
+			this.numOfTroops -= this.numOfTroops /2;
 		} else if (this.numOfTroops == 1) {
 			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
 			this.numOfTroops = 0;

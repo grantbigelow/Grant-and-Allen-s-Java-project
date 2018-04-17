@@ -85,20 +85,17 @@ public class GameWindow extends JPanel implements ActionListener {
 			for(Cell cell:cellList) {
 				if (cell.isCoordInCell(e.getX(), e.getY())) {
 					if (clickList.size() == 0 && cell.cellType == Cell.Type.PLAYER) {
-						System.out.println("In Cell Pt 1");
 						clickList.add(cell);
 					}
 					else if (clickList.size() ==1){
-						System.out.println("In Cell Pt 2");
 						clickList.add(cell);
 						
 					}
 				}
 				
 				if (clickList.size() == 2) {
-					System.out.println("Sending Troops");
 					clickList.get(0).sendTroops(troopList, clickList.get(1));
-					//cellList.clear();
+					clickList.clear();
 				}
 			}
 			

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Troop {
@@ -28,9 +29,9 @@ public class Troop {
 		this.troopType   = cell1.getType();
 		this.targetCell  = cell2;
 		
-		this.pxPerSec    = 30.0; 
+		this.pxPerSec    = 1000.0; // TODO: Change
 		
-		this.finishedMoving = false;System.out.println("Slope" + this.getSlope(-3.94, 12, 17, 6.5));
+		this.finishedMoving = false;
 		
 		
 	}
@@ -52,6 +53,7 @@ public class Troop {
 	
 	public void draw(Graphics g) {
 		if (!this.finishedMoving) {
+			g.setColor(Color.BLACK);
 			DrawObjects.drawNumber(g, this.numOfTroops,(int) this.currentX, (int)this.currentY, 12);
 		}
 	}
