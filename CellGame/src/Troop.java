@@ -26,33 +26,28 @@ public class Troop {
 		
 		this.numOfTroops = numOfTroops;
 		this.troopType   = cell1.getType();
+		this.targetCell  = cell2;
 		
-		this.pxPerSec    = 15.0; 
+		this.pxPerSec    = 30.0; 
 		
-		this.finishedMoving = false;
+		this.finishedMoving = false;System.out.println("Slope" + this.getSlope(-3.94, 12, 17, 6.5));
 		
 		
 	}
 	
 	public void move(int msDelta) {
-		this.currentX += 1;
-		this.currentY += 1;
-		/*double[] delta;
-		double distToMove = (msDelta / 1000.0) * this.pxPerSec;
-		if (!this.finishedMoving) {
-			if (getDistance(this.currentX, this.currentY, this.endX, this.endY) < distToMove) {
-				targetCell.addTroops(this.numOfTroops, this.troopType);
-				
-				this.finishedMoving = true;
-			} else {
-				delta = getXYDelta(getDistance(this.currentX, this.currentY, this.endX, this.endY),
-						           getSlope   (this.currentX, this.currentY, this.endX, this.endY));
-				this.currentX += delta[0];
-				this.currentY += delta[1];
-				
+		double distToMove  = (msDelta / 1000.0) * this.pxPerSec;
+		double[] newPoint;
+		if (! finishedMoving) {
+			if (getDistance(currentX, currentY, endX, endY) < distToMove) {
+				targetCell.addTroops(numOfTroops, troopType);
+				finishedMoving = true;
+			}else {
+				newPoint = getPointAlongLine(currentX, currentY, endX, endY, distToMove);
+				currentX = newPoint[0];
+				currentY = newPoint[1];
 			}
-		}*/
-		
+		}
 	}
 	
 	public void draw(Graphics g) {
@@ -61,24 +56,26 @@ public class Troop {
 		}
 	}
 	
-	private double[] getXYDelta(double distance, double slope){
+	private double[] getPointAlongLine(double x1, double y1, double x2, double y2, double distanceFromP1){
+		//Shift Points so point 1 is at zero
+		double yDlta = y2 - y1;
+		double xDlta = x2 - x1;
 		
-		double xDelta = Math.sqrt( Math.pow(distance, 2) / (Math.pow(slope, 2) + 1) );
-		double yDelta = xDelta * slope;
-		double[] ret = {(int) Math.round(xDelta),(int) Math.round(yDelta)};
+		double xPrime = (distanceFromP1 * xDlta)/ getDistance(x1,y1, x2,y2);
+		double yPrime = (distanceFromP1 * yDlta)/ getDistance(x1,y1, x2,y2);
+		double[] ret = new double[] {x1 + xPrime, y1 + yPrime};
 		return ret;
 	}
 	
+	//YUP
 	private double getDistance(double x1,double y1,double x2,double y2) {
-		return Math.sqrt(Math.pow(x1 + x2, 2) + Math.pow(y1 + y2, 2));
+		return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 	
+	//YUP
 	private double getSlope(double x1,double y1,double x2,double y2) {
 		return (y2 - y1) / (x2 - x1);
 	}
-	
-	private double getDelta(double a, double b) {
-		return b - a;
-	}
+
 
 }

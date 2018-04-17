@@ -36,8 +36,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		addMouseListener(mouseEL);
 		
 		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
-		cellList.add(new Cell(300, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
-		troopList.add(new Troop(cellList.get(0), cellList.get(1), 20));
+		cellList.add(new Cell(300, 100, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
 		
 	}
 	
@@ -74,7 +73,6 @@ public class GameWindow extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println("HI");
 		move(msDelay);
 		repaint();
 		
@@ -85,15 +83,22 @@ public class GameWindow extends JPanel implements ActionListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			for(Cell cell:cellList) {
-				if (cell.isCoordInCell(e.getX(), e.getY()) &&
-					(cell.cellType == Cell.Type.PLAYER || clickList.size() == 1 )) {
-					clickList.add(cell);
-					break;
+				if (cell.isCoordInCell(e.getX(), e.getY())) {
+					if (clickList.size() == 0 && cell.cellType == Cell.Type.PLAYER) {
+						System.out.println("In Cell Pt 1");
+						clickList.add(cell);
+					}
+					else if (clickList.size() ==1){
+						System.out.println("In Cell Pt 2");
+						clickList.add(cell);
+						
+					}
 				}
 				
 				if (clickList.size() == 2) {
-					cellList.get(0).sendTroops(troopList, cellList.get(1));
-					cellList.clear();
+					System.out.println("Sending Troops");
+					clickList.get(0).sendTroops(troopList, clickList.get(1));
+					//cellList.clear();
 				}
 			}
 			
