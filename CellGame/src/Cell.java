@@ -15,12 +15,15 @@ public class Cell {
 	
 	int msDelay;
 	
+	boolean isHighlighted;
+	
 	public Cell(int centerX, int centerY, Type cellType, Size cellSize, int numOfTroops) {
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.cellType = cellType;
 		this.cellSize = cellSize;
 		this.numOfTroops = numOfTroops;
+		this.isHighlighted = false;
 		switch(cellSize){
 			case SMALL:
 				this.maxTroops = 15;
@@ -61,20 +64,35 @@ public class Cell {
 				g.setColor(Color.GRAY);
 				break;
 		}		
-		DrawObjects.drawCenteredCircle(g, this.centerX, this.centerY, this.radius);
+		DrawObjects.drawCenteredCircle(g, centerX, centerY, radius);
 		g.setColor(Color.WHITE);
-		DrawObjects.drawNumber(g, this.numOfTroops, this.centerX, this.centerY, 18);
+		DrawObjects.drawNumber(g, numOfTroops, centerX, centerY, 18);
+		if (isHighlighted) {
+			g.setColor(Color.BLACK);
+			DrawObjects.drawCenteredCircle(g, centerX, centerY, radius + 5, false);
+		}
 	}
 	
 	public int getX() {
-		return this.centerX;
+		return centerX;
 	}
 	public int getY() {
-		return this.centerY;
+		return centerY;
 	}
 	
 	public Type getType() {
-		return this.cellType;
+		return cellType;
+	}
+	
+	public int getNumOfTroops() {
+		return numOfTroops;
+	}
+	
+	public void highlight() {
+		isHighlighted = true;
+	}
+	public void unhighlight() {
+		isHighlighted = false;
 	}
 	
 	public void addTroops(int numOfTroops, Type troopType) {

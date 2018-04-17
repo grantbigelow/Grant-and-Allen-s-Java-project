@@ -23,8 +23,10 @@ public class GameWindow extends JPanel implements ActionListener {
 		this.height    = iHeight;
 		this.extWidth  = iWidth + 17;
 		this.extHeight = iHeight + 40;
-		this.frameRate = 30;
+		this.frameRate = 60;
 		this.msDelay   = (int)(1000.0 / frameRate);
+		
+		
 		setSize(this.extWidth, this.extHeight);
 		setBackground(Color.WHITE);
 		
@@ -84,17 +86,23 @@ public class GameWindow extends JPanel implements ActionListener {
 		public void mouseClicked(MouseEvent e) {
 			for(Cell cell:cellList) {
 				if (cell.isCoordInCell(e.getX(), e.getY())) {
-					if (clickList.size() == 0 && cell.cellType == Cell.Type.PLAYER) {
+					if (clickList.size() == 0 && cell.cellType == Cell.Type.PLAYER && cell.getNumOfTroops() != 0) {
 						clickList.add(cell);
+						cell.highlight();
 					}
 					else if (clickList.size() ==1){
 						clickList.add(cell);
+						cell.highlight();
 						
 					}
 				}
 				
 				if (clickList.size() == 2) {
-					clickList.get(0).sendTroops(troopList, clickList.get(1));
+					if (clickList.get(0) != clickList.get(1)) {
+						clickList.get(0).sendTroops(troopList, clickList.get(1));
+					}
+					clickList.get(0).unhighlight();
+					clickList.get(1).unhighlight();
 					clickList.clear();
 				}
 			}
