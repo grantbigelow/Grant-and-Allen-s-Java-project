@@ -124,7 +124,13 @@ public class Cell {
 			this.rCounter=0;
 		}
 	}
-		
+	public void sendEnemy(ArrayList<Troop> t, Cell otherCell, int msDelay) {
+		this.rCounter+=msDelay;
+		if (this.numOfTroops > 1 && rCounter>2000) {
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
+			this.numOfTroops -= this.numOfTroops /2;
+		}
+	}
 	public boolean isCoordInCell(int x, int y) {
 		if (Math.abs(this.centerX - x) <= this.radius || Math.abs(this.centerY - y) <= this.radius) {
 			return true;
