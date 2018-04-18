@@ -76,7 +76,11 @@ public class GameWindow extends JPanel implements ActionListener {
 	public void regen(int msDelay) {
 		for(Cell cell : cellList) {
 			cell.regen(msDelay);
+<<<<<<< HEAD
 			//cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
+=======
+			cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
+>>>>>>> 14f990b930d9b026a73927b6f1c589b3ecac65d3
 		}
 	}
 	@Override
