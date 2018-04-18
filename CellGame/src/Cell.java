@@ -33,12 +33,12 @@ public class Cell {
 				break;
 			case MEDIUM:
 				this.maxTroops = 40;
-				this.regenRate = 1.2;
+				this.regenRate = 1.5;
 				this.radius    = 36;
 				break;
 			case LARGE:
 				this.maxTroops = 100;
-				this.regenRate = 1.5;
+				this.regenRate = 2;
 				this.radius    = 52;
 				break;
 		}
@@ -105,6 +105,9 @@ public class Cell {
 			this.numOfTroops = numOfTroops - this.numOfTroops;
 			this.cellType = troopType;
 		}
+		if (this.numOfTroops > this.maxTroops) {
+			this.numOfTroops = this.maxTroops;
+		}
 	}
 	
 	public void sendTroops(ArrayList<Troop> t, Cell otherCell) {
@@ -119,14 +122,23 @@ public class Cell {
 	}
 	public void regen(int msDelay) {
 		this.rCounter+=msDelay;
-		if(rCounter>regenRate*1000 && this.numOfTroops<this.maxTroops) {
+		if(this.cellType == Type.NEUTRAL) {
+			this.rCounter = 0;
+		}
+		else if(rCounter> 1000.0 * (1.0/regenRate) && this.numOfTroops<this.maxTroops) {
 			this.numOfTroops+=1;
 			this.rCounter=0;
 		}
 	}
-		
+	public void sendEnemy(ArrayList<Troop> t, Cell otherCell, int msDelay) {
+		this.rCounter+=msDelay;
+		if (this.numOfTroops > 1 && rCounter>2000) {
+			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
+			this.numOfTroops -= this.numOfTroops /2;
+		}
+	}
 	public boolean isCoordInCell(int x, int y) {
-		if (Math.abs(this.centerX - x) <= this.radius || Math.abs(this.centerY - y) <= this.radius) {
+		if (Math.pow((x-this.centerX),2) + Math.pow((y-this.centerY),2) <= Math.pow(this.radius, 2)) {
 			return true;
 		}
 		return false;

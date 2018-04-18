@@ -39,6 +39,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		
 		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
 		cellList.add(new Cell(300, 100, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
+		cellList.add(new Cell(100, 400, Cell.Type.NEUTRAL, Cell.Size.LARGE, 10));
 		
 		
 	}
@@ -75,6 +76,7 @@ public class GameWindow extends JPanel implements ActionListener {
 	public void regen(int msDelay) {
 		for(Cell cell : cellList) {
 			cell.regen(msDelay);
+			//cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
 		}
 	}
 	@Override
