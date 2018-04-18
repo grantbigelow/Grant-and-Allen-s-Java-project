@@ -40,6 +40,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
 		cellList.add(new Cell(300, 100, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
 		
+		
 	}
 	
 	public void move(int msDelta) {
@@ -71,11 +72,17 @@ public class GameWindow extends JPanel implements ActionListener {
 		  y = y-(r/2);
 		  g.fillOval(x,y,r,r);
 		}
-	
+	public void regen(int msDelay) {
+		for(Cell cell : cellList) {
+			cell.regen(msDelay);
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		move(msDelay);
+		regen(msDelay);
+		
 		repaint();
 		
 	}
@@ -100,9 +107,11 @@ public class GameWindow extends JPanel implements ActionListener {
 				if (clickList.size() == 2) {
 					if (clickList.get(0) != clickList.get(1)) {
 						clickList.get(0).sendTroops(troopList, clickList.get(1));
+						
 					}
 					clickList.get(0).unhighlight();
 					clickList.get(1).unhighlight();
+				
 					clickList.clear();
 				}
 			}

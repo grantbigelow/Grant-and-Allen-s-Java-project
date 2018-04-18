@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Cell {
 	int     centerX;
@@ -12,7 +13,7 @@ public class Cell {
 	int     numOfTroops;
 	int     maxTroops;
 	double  regenRate; // troops per second
-	
+	int rCounter;
 	int msDelay;
 	
 	boolean isHighlighted;
@@ -116,7 +117,14 @@ public class Cell {
 		}
 		
 	}
-	
+	public void regen(int msDelay) {
+		this.rCounter+=msDelay;
+		if(rCounter>regenRate*1000 && this.numOfTroops<this.maxTroops) {
+			this.numOfTroops+=1;
+			this.rCounter=0;
+		}
+	}
+		
 	public boolean isCoordInCell(int x, int y) {
 		if (Math.abs(this.centerX - x) <= this.radius || Math.abs(this.centerY - y) <= this.radius) {
 			return true;
