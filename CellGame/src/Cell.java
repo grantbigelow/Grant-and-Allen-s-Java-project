@@ -44,6 +44,11 @@ public class Cell {
 		}
 	}
 	
+	
+	public Cell copy() {
+		return new Cell(centerX, centerY, cellType, cellSize, numOfTroops);
+	}
+	
 	public enum Type{
 		PLAYER, ENEMY, NEUTRAL
 	}
@@ -74,9 +79,11 @@ public class Cell {
 		}
 	}
 	
+	
 	public int getX() {
 		return centerX;
 	}
+	
 	public int getY() {
 		return centerY;
 	}
@@ -85,13 +92,16 @@ public class Cell {
 		return cellType;
 	}
 	
+	
 	public int getNumOfTroops() {
 		return numOfTroops;
 	}
 	
+	
 	public void highlight() {
 		isHighlighted = true;
 	}
+	
 	public void unhighlight() {
 		isHighlighted = false;
 	}
@@ -110,6 +120,7 @@ public class Cell {
 		}
 	}
 	
+	
 	public void sendTroops(ArrayList<Troop> t, Cell otherCell) {
 		if (this.numOfTroops > 1) {
 			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
@@ -120,6 +131,7 @@ public class Cell {
 		}
 		
 	}
+	
 	public void regen(int msDelay) {
 		this.rCounter+=msDelay;
 		if(this.cellType == Type.NEUTRAL) {

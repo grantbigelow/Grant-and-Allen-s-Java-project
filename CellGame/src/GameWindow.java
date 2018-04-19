@@ -10,13 +10,17 @@ import javax.swing.Timer;
 import javax.swing.JPanel;
 
 public class GameWindow extends JPanel implements ActionListener {
-	int width, height, extWidth, extHeight, msDelay;
+	int width, height, extWidth, extHeight, msDelay, currentLevel;
 	double frameRate;
 	
 	ArrayList<Cell>  cellList  = new ArrayList<Cell>();
 	ArrayList<Troop> troopList = new ArrayList<Troop>();
 	
 	ArrayList<Cell>  clickList = new ArrayList<Cell>();
+	
+	Levels 	         levels    = new Levels();
+	
+	Cell cellDown;
 	
 	public GameWindow(int iWidth, int iHeight) {
 		this.width     = iWidth;
@@ -25,6 +29,9 @@ public class GameWindow extends JPanel implements ActionListener {
 		this.extHeight = iHeight + 40;
 		this.frameRate = 60;
 		this.msDelay   = (int)(1000.0 / frameRate);
+		this.currentLevel = 0;
+		
+		this.cellDown  = null;
 		
 		
 		setSize(this.extWidth, this.extHeight);
@@ -37,14 +44,37 @@ public class GameWindow extends JPanel implements ActionListener {
 		MouseListen mouseEL = new MouseListen();
 		addMouseListener(mouseEL);
 		
-		cellList.add(new Cell(100, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30));
-		cellList.add(new Cell(300, 100, Cell.Type.ENEMY, Cell.Size.SMALL, 10));
-		cellList.add(new Cell(100, 400, Cell.Type.NEUTRAL, Cell.Size.LARGE, 10));
-		
-		
+		initLevels();
+		loadLevel(this.currentLevel);
 	}
 	
-	public void move(int msDelta) {
+	// creates the layouts for each level
+	private void initLevels() {
+		levels.addLevel( // Level 1
+				new Cell(250, 150, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30),
+				new Cell(500, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10)
+		);
+		levels.addLevel( // Level 2
+				new Cell(100, 100, Cell.Type.PLAYER, Cell.Size.MEDIUM, 10),
+				new Cell(100, 200, Cell.Type.ENEMY, Cell.Size.MEDIUM, 15),
+				new Cell(100, 400, Cell.Type.NEUTRAL, Cell.Size.LARGE, 4)
+				
+		);
+		levels.addLevel( // Level 3
+				new Cell(300, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30),
+				new Cell(400, 200, Cell.Type.ENEMY, Cell.Size.SMALL, 10)
+		);
+	}
+	
+	// loads a specific level
+	private void loadLevel(int levelNumber) {
+		try {
+			cellList = levels.getLevelData(levelNumber);
+		}
+		catch(Exception e){}
+	}
+	
+	private void move(int msDelta) {
 		for (int i = 0; i < troopList.size(); i++) {
 			Troop troop = troopList.get(i);
 			troop.move(msDelta);
@@ -56,6 +86,24 @@ public class GameWindow extends JPanel implements ActionListener {
 		}
 	}
 	
+	private void regen(int msDelay) {
+		for(Cell cell : cellList) {
+			cell.regen(msDelay);
+			//cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
+		}
+	}
+	
+	private void checkWin() {
+		for(Cell cell : cellList) {
+			if (cell.getType() == Cell.Type.ENEMY) {
+				return;
+			}
+		}
+		currentLevel += 1;
+		loadLevel(currentLevel);
+	}
+	
+	// responsible for drawing the screen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
@@ -67,21 +115,11 @@ public class GameWindow extends JPanel implements ActionListener {
 		}
 	}
 	
-	//https://stackoverflow.com/a/19387172
-	public void drawCenteredCircle(Graphics g, int x, int y, int r) {
-		  x = x-(r/2);
-		  y = y-(r/2);
-		  g.fillOval(x,y,r,r);
-		}
-	public void regen(int msDelay) {
-		for(Cell cell : cellList) {
-			cell.regen(msDelay);
-			//cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
-		}
-	}
+	// responsible for calling functions every msDelay
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		checkWin();
 		move(msDelay);
 		regen(msDelay);
 		
@@ -93,6 +131,31 @@ public class GameWindow extends JPanel implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
 			for(Cell cell:cellList) {
 				if (cell.isCoordInCell(e.getX(), e.getY())) {
 					if (clickList.size() == 0 && cell.cellType == Cell.Type.PLAYER && cell.getNumOfTroops() != 0) {
@@ -119,31 +182,6 @@ public class GameWindow extends JPanel implements ActionListener {
 			}
 			
 			repaint();
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 		
 	}
