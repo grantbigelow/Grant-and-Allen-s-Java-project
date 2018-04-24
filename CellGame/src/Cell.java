@@ -15,7 +15,9 @@ public class Cell {
 	double  regenRate; // troops per second
 	int rCounter;
 	int msDelay;
-	
+	int enemyDelay = 10000;
+	int attackDelay = 0;
+	int attackInit = 3000;
 	boolean isHighlighted;
 	
 	public Cell(int centerX, int centerY, Type cellType, Size cellSize, int numOfTroops) {
@@ -142,11 +144,46 @@ public class Cell {
 			this.rCounter=0;
 		}
 	}
-	public void sendEnemy(ArrayList<Troop> t, Cell otherCell, int msDelay) {
-		this.rCounter+=msDelay;
-		if (this.numOfTroops > 1 && rCounter>2000) {
-			t.add(new Troop(this, otherCell, this.numOfTroops / 2));
-			this.numOfTroops -= this.numOfTroops /2;
+	public void attack(int msDelay) {
+		int leftover = msDelay;
+		if(this.cellType == Type.ENEMY) {
+			if(enemyDelay == 0) {
+			while(leftover > 0)	{
+				if (attackDelay == 0) {
+					System.out.println("ATTACK");
+					attackDelay = attackInit;
+				}
+				else if (attackDelay - leftover <=0) {
+					System.out.println("ATTACK");
+					leftover -= attackDelay;
+					attackDelay = attackInit;
+				}
+				else {
+					attackDelay -= leftover;
+					leftover = 0;
+				}
+			}
+			}
+			else if(enemyDelay - msDelay <= 0) {
+				leftover = msDelay - enemyDelay;
+				while(leftover > 0)	{
+					if (attackDelay == 0) {
+						System.out.println("ATTACK");
+						attackDelay = attackInit;
+					}
+					else if (attackDelay - leftover <=0) {
+						System.out.println("ATTACK");
+						leftover -= attackDelay;
+						attackDelay = attackInit;
+					}
+					else {
+						attackDelay -= leftover;
+						leftover = 0;
+					}
+				}
+			}
+			else
+				enemyDelay-=msDelay;
 		}
 	}
 	public boolean isCoordInCell(int x, int y) {

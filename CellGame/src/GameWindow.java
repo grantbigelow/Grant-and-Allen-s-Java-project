@@ -92,7 +92,11 @@ public class GameWindow extends JPanel implements ActionListener {
 			//cellList.get(1).sendEnemy(troopList, cellList.get(0), msDelay);
 		}
 	}
-	
+	private void cellAttack(int msDelay) {
+		for(Cell cell : cellList) {
+			cell.attack(msDelay);
+		}
+	}
 	private void checkWin() {
 		for(Cell cell : cellList) {
 			if (cell.getType() == Cell.Type.ENEMY) {
@@ -122,7 +126,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		checkWin();
 		move(msDelay);
 		regen(msDelay);
-		
+		cellAttack(msDelay);
 		repaint();
 		
 	}
