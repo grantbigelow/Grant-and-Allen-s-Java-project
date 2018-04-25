@@ -156,7 +156,7 @@ public class Cell {
 				else if (attackDelay - leftover <=0) {
 					System.out.println("ATTACK");
 					leftover -= attackDelay;
-					attackDelay = attackInit;
+					
 				}
 				else {
 					attackDelay -= leftover;
@@ -164,24 +164,24 @@ public class Cell {
 				}
 			}
 			}
-			else if(enemyDelay - msDelay <= 0) {
+		/*	else if(enemyDelay - msDelay <= 0) {
 				leftover = msDelay - enemyDelay;
 				while(leftover > 0)	{
 					if (attackDelay == 0) {
 						System.out.println("ATTACK");
-						attackDelay = attackInit;
+						
 					}
 					else if (attackDelay - leftover <=0) {
 						System.out.println("ATTACK");
 						leftover -= attackDelay;
-						attackDelay = attackInit;
+						
 					}
 					else {
 						attackDelay -= leftover;
 						leftover = 0;
 					}
 				}
-			}
+			}*/
 			else
 				enemyDelay-=msDelay;
 		}
