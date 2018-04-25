@@ -29,7 +29,7 @@ public class Troop {
 		this.troopType   = cell1.getType();
 		this.targetCell  = cell2;
 		
-		this.pxPerSec    = 1000.0; // TODO: Change
+		this.pxPerSec    = 250.0; // TODO: Change
 		
 		this.finishedMoving = false;
 		

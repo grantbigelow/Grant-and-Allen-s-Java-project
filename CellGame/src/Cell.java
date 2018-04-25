@@ -1,8 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
+import java.util.concurrent.ThreadLocalRandom;
+ 
 public class Cell {
 	int     centerX;
 	int     centerY;
@@ -144,18 +146,23 @@ public class Cell {
 			this.rCounter=0;
 		}
 	}
-	public void attack(int msDelay) {
+	public void attack(int msDelay,ArrayList<Troop> t, ArrayList <Cell> c) {
 		int leftover;
+		
 		if(this.cellType == Type.ENEMY) {
 			if(enemyDelay == 0) {
 				leftover = msDelay;
 				while(leftover > 0)	{
 					if (attackDelay == 0) {
-						System.out.println("FIRST ATTACK");
+						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
+						sendTroops(t, c.get(randomNum));
+						System.out.println("Grant Bigelow is awesome");
 						attackDelay = attackInit;
 					}
 					else if (attackDelay - leftover <=0) {
-						System.out.println("ATTACK");
+						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
+						sendTroops(t, c.get(randomNum));
+						System.out.println("Grant Bigelow is awesome");
 						leftover -= attackDelay;
 						attackDelay = attackInit;
 						
@@ -170,11 +177,15 @@ public class Cell {
 				leftover = msDelay;
 				while(leftover > 0)	{
 					if (attackDelay == 0) {
-						System.out.println("DoubleU ATTACK");
+						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
+						sendTroops(t, c.get(randomNum));
+						System.out.println("Allen and Grant are geniuses");
 						attackDelay = attackInit;
 					}
 					else if (attackDelay - leftover <=0) {
-						System.out.println("ATTACK");
+						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
+						sendTroops(t, c.get(randomNum));
+						System.out.println("Allen and Grant are geniuses");
 						leftover -= attackDelay;
 						attackDelay = attackInit;
 						

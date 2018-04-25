@@ -62,6 +62,8 @@ public class GameWindow extends JPanel implements ActionListener {
 		);
 		levels.addLevel( // Level 3
 				new Cell(300, 200, Cell.Type.PLAYER, Cell.Size.MEDIUM, 30),
+				new Cell(100, 500, Cell.Type.NEUTRAL, Cell.Size.SMALL, 15),
+				new Cell(400, 500, Cell.Type.ENEMY, Cell.Size.MEDIUM, 15),
 				new Cell(400, 200, Cell.Type.ENEMY, Cell.Size.SMALL, 10)
 		);
 	}
@@ -94,7 +96,7 @@ public class GameWindow extends JPanel implements ActionListener {
 	}
 	private void cellAttack(int msDelay) {
 		for(Cell cell : cellList) {
-			cell.attack(msDelay);
+			cell.attack(msDelay, troopList, cellList);
 		}
 	}
 	private void checkWin() {
