@@ -15,7 +15,7 @@ public class Cell {
 	double  regenRate; // troops per second
 	int rCounter;
 	int msDelay;
-	int enemyDelay = 10000;
+	int enemyDelay = 5000;
 	int attackDelay = 0;
 	int attackInit = 3000;
 	boolean isHighlighted;
@@ -145,35 +145,19 @@ public class Cell {
 		}
 	}
 	public void attack(int msDelay) {
-		int leftover = msDelay;
+		int leftover;
 		if(this.cellType == Type.ENEMY) {
 			if(enemyDelay == 0) {
-			while(leftover > 0)	{
-				if (attackDelay == 0) {
-					System.out.println("ATTACK");
-					attackDelay = attackInit;
-				}
-				else if (attackDelay - leftover <=0) {
-					System.out.println("ATTACK");
-					leftover -= attackDelay;
-					
-				}
-				else {
-					attackDelay -= leftover;
-					leftover = 0;
-				}
-			}
-			}
-		/*	else if(enemyDelay - msDelay <= 0) {
-				leftover = msDelay - enemyDelay;
+				leftover = msDelay;
 				while(leftover > 0)	{
 					if (attackDelay == 0) {
-						System.out.println("ATTACK");
-						
+						System.out.println("FIRST ATTACK");
+						attackDelay = attackInit;
 					}
 					else if (attackDelay - leftover <=0) {
 						System.out.println("ATTACK");
 						leftover -= attackDelay;
+						attackDelay = attackInit;
 						
 					}
 					else {
@@ -181,7 +165,26 @@ public class Cell {
 						leftover = 0;
 					}
 				}
-			}*/
+			}
+			else if(enemyDelay - msDelay <= 0) {
+				leftover = msDelay;
+				while(leftover > 0)	{
+					if (attackDelay == 0) {
+						System.out.println("DoubleU ATTACK");
+						attackDelay = attackInit;
+					}
+					else if (attackDelay - leftover <=0) {
+						System.out.println("ATTACK");
+						leftover -= attackDelay;
+						attackDelay = attackInit;
+						
+					}
+					else {
+						attackDelay -= leftover;
+						leftover = 0;
+					}
+				}
+			}
 			else
 				enemyDelay-=msDelay;
 		}
