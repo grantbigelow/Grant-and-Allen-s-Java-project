@@ -156,13 +156,11 @@ public class Cell {
 					if (attackDelay == 0) {
 						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
 						sendTroops(t, c.get(randomNum));
-						System.out.println("Grant Bigelow is awesome");
 						attackDelay = attackInit;
 					}
 					else if (attackDelay - leftover <=0) {
 						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
 						sendTroops(t, c.get(randomNum));
-						System.out.println("Grant Bigelow is awesome");
 						leftover -= attackDelay;
 						attackDelay = attackInit;
 						
@@ -179,13 +177,11 @@ public class Cell {
 					if (attackDelay == 0) {
 						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
 						sendTroops(t, c.get(randomNum));
-						System.out.println("Allen and Grant are geniuses");
 						attackDelay = attackInit;
 					}
 					else if (attackDelay - leftover <=0) {
 						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
 						sendTroops(t, c.get(randomNum));
-						System.out.println("Allen and Grant are geniuses");
 						leftover -= attackDelay;
 						attackDelay = attackInit;
 						

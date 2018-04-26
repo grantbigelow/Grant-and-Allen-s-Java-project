@@ -10,7 +10,7 @@ public class Main {
 		int internalWidth  = 800;
 		int internalHeight = 600;
 		
-		JFrame frame = new JFrame("Cell Game");
+		JFrame frame = new JFrame("Cell Game 1 (A Sequel will come out with Half Life 3 / Portal 3)");
 		GameWindow gameWindow = new GameWindow(internalWidth, internalHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

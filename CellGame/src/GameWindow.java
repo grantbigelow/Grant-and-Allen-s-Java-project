@@ -134,10 +134,26 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.drawString("Click the Screen to Continue...", 190, 400);
 		}
 		else if (instruc) {
-			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 20 ));
 			g.setColor(Color.black);
-			g.drawString("", 20, 200);
-			g.drawString("Click the Screen to Continue...", 190, 400);
+			g.drawString("Cell Game", 20, 25);
+			g.drawString("By: Allen Retzler and Grant Bigelow", 20, 50);
+
+			g.drawString("Instructions:", 20, 95);
+			g.drawString("Your goal is to help a body recover by using nanobots to cure all infected cells", 20, 120);
+			g.drawString("Blue cells have nanobots in them.", 20, 145);
+			g.drawString("Red cells are infected and will attack a random cell every 3 seconds.", 20, 170);
+			g.drawString("Grey Cells are regular cells. They have neither nanobots nor viruses in them.", 20, 195);
+
+			g.drawString("Blue and Red, cells will regenerate troops over time, depending on how large of a", 20, 220);
+			g.drawString("cell they are in.", 20, 245);
+			g.drawString("Small cells will regenerate 1 nanobot or virus per second.", 20, 270);
+			g.drawString("Medium cells will regenerate 1.5 nanobots or viruses per second.", 20, 295);
+			g.drawString("Large cells will regenerate 2 nanobots or viruses per second.", 20, 320);
+
+			g.drawString("You can send nanobots from a blue cell to any other cell by clicking on a blue cell", 20, 370);
+			g.drawString("and then clicking on another cell.", 20, 395);
+			g.drawString("Click the Screen to Continue...", 190, 500);
 		}
 		else {
 		for (Cell cell: cellList) {
