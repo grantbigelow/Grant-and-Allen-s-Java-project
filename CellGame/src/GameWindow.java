@@ -151,7 +151,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
 			g.setColor(Color.black);
 			g.drawString("You Win!", 300, 200);
-			g.drawString("Click the Screen to Restart...", 190, 500);
+			g.drawString("Click the Screen to Restart...", 100, 500);
 			
 		}else if (levelComp) {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
@@ -185,7 +185,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
 			g.setColor(Color.black);
 			g.drawString("You Lost!", 300, 200);
-			g.drawString("Click the Screen to Restart...", 190, 500);
+			g.drawString("Click the Screen to Restart...", 100, 500);
 			
 		}
 		else 
