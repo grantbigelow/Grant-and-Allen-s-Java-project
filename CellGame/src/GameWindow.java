@@ -117,6 +117,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			}
 		}
 		currentLevel += 1;
+		clickList.clear();
 		levelComp = true;
 	
 		loadLevel(currentLevel);
