@@ -193,7 +193,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		checkWin();
 		checkLost();
 		
-		if(levelComp==false) {
+		if(levelComp==false && ! lost) {
 			move(msDelay);
 			regen(msDelay);
 			
