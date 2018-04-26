@@ -34,11 +34,11 @@ public class GameWindow extends JPanel implements ActionListener {
 		this.extHeight = iHeight + 40;
 		this.frameRate = 60;
 		this.msDelay   = (int)(1000.0 / frameRate);
-		this.currentLevel = 0;
-		this.lost = false;
-		this.cellDown  = null;
-		this.winner = false;
-		this.instruc = false;
+		currentLevel = 0;
+		lost = false;
+		cellDown  = null;
+		winner = false;
+		instruc = false;
 		setSize(this.extWidth, this.extHeight);
 		setBackground(Color.WHITE);
 		
@@ -49,6 +49,16 @@ public class GameWindow extends JPanel implements ActionListener {
 		MouseListen mouseEL = new MouseListen();
 		addMouseListener(mouseEL);
 		
+		initLevels();
+		loadLevel(this.currentLevel);
+	}
+	
+	private void reinitData() {
+		currentLevel = 0;
+		lost = false;
+		cellDown  = null;
+		winner = false;
+		instruc = false;
 		initLevels();
 		loadLevel(this.currentLevel);
 	}
@@ -141,6 +151,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
 			g.setColor(Color.black);
 			g.drawString("You Win!", 300, 200);
+			g.drawString("Click the Screen to Restart...", 190, 500);
 			
 		}else if (levelComp) {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
@@ -174,6 +185,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
 			g.setColor(Color.black);
 			g.drawString("You Lost!", 300, 200);
+			g.drawString("Click the Screen to Restart...", 190, 500);
 			
 		}
 		else 
@@ -193,6 +205,8 @@ public class GameWindow extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		checkWin();
 		checkLost();
+		
+
 		
 		if(levelComp==false && ! lost && ! instruc) {
 			move(msDelay);
@@ -247,6 +261,10 @@ public class GameWindow extends JPanel implements ActionListener {
 						cell.highlight();
 						
 					}
+				}
+				
+				if (lost || winner) { // Reinitialize values
+					reinitData();
 				}
 				
 
