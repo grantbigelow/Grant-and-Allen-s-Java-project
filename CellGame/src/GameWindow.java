@@ -23,6 +23,7 @@ public class GameWindow extends JPanel implements ActionListener {
 	
 	Cell cellDown;
 	boolean winner = false;
+	boolean instruc = false;
 	boolean levelComp = false;
 	public GameWindow(int iWidth, int iHeight) {
 		this.width     = iWidth;
@@ -35,7 +36,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		
 		this.cellDown  = null;
 		this.winner = false;
-		
+		this.instruc = false;
 		setSize(this.extWidth, this.extHeight);
 		setBackground(Color.WHITE);
 		
@@ -74,6 +75,9 @@ public class GameWindow extends JPanel implements ActionListener {
 	
 	// loads a specific level
 	private void loadLevel(int levelNumber) {
+		if(currentLevel == 0) {
+			instruc = true;
+		}
 		try {
 			cellList = levels.getLevelData(levelNumber);
 			
@@ -127,6 +131,12 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
 			g.setColor(Color.black);
 			g.drawString("You beat the level, I guess we didn't make it hard enough!", 20, 200);
+			g.drawString("Click the Screen to Continue...", 190, 400);
+		}
+		else if (instruc) {
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
+			g.setColor(Color.black);
+			g.drawString("", 20, 200);
 			g.drawString("Click the Screen to Continue...", 190, 400);
 		}
 		else {
@@ -202,6 +212,8 @@ public class GameWindow extends JPanel implements ActionListener {
 				}
 				if(levelComp)
 					levelComp = false;
+				if(instruc)
+					instruc = false;
 				if (clickList.size() == 2) {
 					if (clickList.get(0) != clickList.get(1)) {
 						clickList.get(0).sendTroops(troopList, clickList.get(1));
