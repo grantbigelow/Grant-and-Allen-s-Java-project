@@ -25,6 +25,8 @@ public class GameWindow extends JPanel implements ActionListener {
 	boolean winner = false;
 	boolean instruc = false;
 	boolean levelComp = false;
+	boolean lost = false;
+	boolean redo = false;
 	public GameWindow(int iWidth, int iHeight) {
 		this.width     = iWidth;
 		this.height    = iHeight;
@@ -33,7 +35,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		this.frameRate = 60;
 		this.msDelay   = (int)(1000.0 / frameRate);
 		this.currentLevel = 0;
-		
+		this.lost = false;
 		this.cellDown  = null;
 		this.winner = false;
 		this.instruc = false;
@@ -82,7 +84,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			cellList = levels.getLevelData(levelNumber);
 			
 		}
-		catch(Exception e){winner = true;}
+		catch(Exception e){winner = true; }
 	}
 	
 	private void move(int msDelta) {
@@ -116,9 +118,20 @@ public class GameWindow extends JPanel implements ActionListener {
 		}
 		currentLevel += 1;
 		levelComp = true;
+	
 		loadLevel(currentLevel);
 	}
-	
+	private void checkLost() {
+		for(Cell cell : cellList) {
+			if (cell.getType() == Cell.Type.PLAYER || troopList.size() != 0) {
+				return;
+			}
+		}
+		
+		lost = true;
+		
+	}
+
 	// responsible for drawing the screen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -127,6 +140,7 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
 			g.setColor(Color.black);
 			g.drawString("You Win!", 300, 200);
+			
 		}else if (levelComp) {
 			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
 			g.setColor(Color.black);
@@ -155,7 +169,14 @@ public class GameWindow extends JPanel implements ActionListener {
 			g.drawString("and then clicking on another cell.", 20, 395);
 			g.drawString("Click the Screen to Continue...", 190, 500);
 		}
-		else {
+		else if(lost) {
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
+			g.setColor(Color.black);
+			g.drawString("You Lost!", 300, 200);
+			
+		}
+		else 
+		
 		for (Cell cell: cellList) {
 			cell.draw(g);
 		}
@@ -163,14 +184,14 @@ public class GameWindow extends JPanel implements ActionListener {
 			troop.draw(g);
 		}
 		}
-	}
+	
 	
 	// responsible for calling functions every msDelay
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		checkWin();
-		
+		checkLost();
 		
 		if(levelComp==false) {
 			move(msDelay);
@@ -226,10 +247,14 @@ public class GameWindow extends JPanel implements ActionListener {
 						
 					}
 				}
+				
+
 				if(levelComp)
 					levelComp = false;
 				if(instruc)
 					instruc = false;
+			
+				
 				if (clickList.size() == 2) {
 					if (clickList.get(0) != clickList.get(1)) {
 						clickList.get(0).sendTroops(troopList, clickList.get(1));
