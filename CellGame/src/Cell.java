@@ -154,7 +154,6 @@ public class Cell {
 				leftover = msDelay;
 				while(leftover > 0)	{
 					if (attackDelay == 0) {
-						// https://stackoverflow.com/a/363692
 						int randomNum = ThreadLocalRandom.current().nextInt(0, c.size());
 						sendTroops(t, c.get(randomNum));
 						System.out.println("Grant Bigelow is awesome");

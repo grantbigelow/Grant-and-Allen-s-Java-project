@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,8 @@ public class GameWindow extends JPanel implements ActionListener {
 	Levels 	         levels    = new Levels();
 	
 	Cell cellDown;
-	
+	boolean winner = false;
+	boolean levelComp = false;
 	public GameWindow(int iWidth, int iHeight) {
 		this.width     = iWidth;
 		this.height    = iHeight;
@@ -32,7 +34,7 @@ public class GameWindow extends JPanel implements ActionListener {
 		this.currentLevel = 0;
 		
 		this.cellDown  = null;
-		
+		this.winner = false;
 		
 		setSize(this.extWidth, this.extHeight);
 		setBackground(Color.WHITE);
@@ -55,7 +57,7 @@ public class GameWindow extends JPanel implements ActionListener {
 				new Cell(500, 400, Cell.Type.ENEMY, Cell.Size.SMALL, 10)
 		);
 		levels.addLevel( // Level 2
-				new Cell(100, 100, Cell.Type.PLAYER, Cell.Size.MEDIUM, 10),
+				new Cell(100, 100, Cell.Type.PLAYER, Cell.Size.MEDIUM, 15),
 				new Cell(100, 200, Cell.Type.ENEMY, Cell.Size.MEDIUM, 15),
 				new Cell(100, 400, Cell.Type.NEUTRAL, Cell.Size.LARGE, 4)
 				
@@ -65,15 +67,18 @@ public class GameWindow extends JPanel implements ActionListener {
 				new Cell(100, 500, Cell.Type.NEUTRAL, Cell.Size.SMALL, 15),
 				new Cell(400, 500, Cell.Type.ENEMY, Cell.Size.MEDIUM, 15),
 				new Cell(400, 200, Cell.Type.ENEMY, Cell.Size.SMALL, 10)
+				
 		);
+		
 	}
 	
 	// loads a specific level
 	private void loadLevel(int levelNumber) {
 		try {
 			cellList = levels.getLevelData(levelNumber);
+			
 		}
-		catch(Exception e){}
+		catch(Exception e){winner = true;}
 	}
 	
 	private void move(int msDelta) {
@@ -101,11 +106,12 @@ public class GameWindow extends JPanel implements ActionListener {
 	}
 	private void checkWin() {
 		for(Cell cell : cellList) {
-			if (cell.getType() == Cell.Type.ENEMY) {
+			if (cell.getType() == Cell.Type.ENEMY || troopList.size() != 0) {
 				return;
 			}
 		}
 		currentLevel += 1;
+		levelComp = true;
 		loadLevel(currentLevel);
 	}
 	
@@ -113,11 +119,23 @@ public class GameWindow extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		if(winner) {
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 48 ));
+			g.setColor(Color.black);
+			g.drawString("You Win!", 300, 200);
+		}else if (levelComp) {
+			g.setFont(new Font("Comic Sans MS", Font.PLAIN, 28 ));
+			g.setColor(Color.black);
+			g.drawString("You beat the level, I guess we didn't make it hard enough!", 20, 200);
+			g.drawString("Click the Screen to Continue...", 190, 400);
+		}
+		else {
 		for (Cell cell: cellList) {
 			cell.draw(g);
 		}
 		for(Troop troop:troopList) {
 			troop.draw(g);
+		}
 		}
 	}
 	
@@ -126,10 +144,18 @@ public class GameWindow extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		checkWin();
-		move(msDelay);
-		regen(msDelay);
-		cellAttack(msDelay);
+		
+		
+		if(levelComp==false) {
+			move(msDelay);
+			regen(msDelay);
+			
+			cellAttack(msDelay);
+			
+		}
+		
 		repaint();
+		
 		
 	}
 	
@@ -174,7 +200,8 @@ public class GameWindow extends JPanel implements ActionListener {
 						
 					}
 				}
-				
+				if(levelComp)
+					levelComp = false;
 				if (clickList.size() == 2) {
 					if (clickList.get(0) != clickList.get(1)) {
 						clickList.get(0).sendTroops(troopList, clickList.get(1));
